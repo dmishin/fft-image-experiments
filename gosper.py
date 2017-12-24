@@ -92,32 +92,6 @@ class Gosper:
             t.right()
             self.B(level)
 
-### copied from https://stackoverflow.com/questions/31638651/how-can-i-draw-lines-into-numpy-arrays    
-def naive_line(r0, c0, r1, c1):
-    import numpy as np
-    # The algorithm below works fine if c1 >= c0 and c1-c0 >= abs(r1-r0).
-    # If either of these cases are violated, do some switches.
-    if abs(c1-c0) < abs(r1-r0):
-        # Switch x and y, and switch again when returning.
-        xx, yy, val = naive_line(c0, r0, c1, r1)
-        return (yy, xx, val)
-
-    # At this point we know that the distance in columns (x) is greater
-    # than that in rows (y). Possibly one more switch if c0 > c1.
-    if c0 > c1:
-        return naive_line(r1, c1, r0, c0)
-
-    # We write y as a function of x, because the slope is always <= 1
-    # (in absolute value)
-    x = np.arange(c0, c1+1, dtype=float)
-    y = x * (r1-r0) / (c1-c0) + (c1*r0-c0*r1) / (c1-c0)
-
-    valbot = np.floor(y)-y+1
-    valtop = y-np.floor(y)
-
-    return (np.concatenate((np.floor(y), np.floor(y)+1)).astype(int), np.concatenate((x,x)).astype(int),
-            np.concatenate((valbot, valtop)))    
-
 def gosper_diagram(size, order, scale):
     from PIL import Image, ImageDraw
     
